@@ -19,17 +19,11 @@ struct singleLinkedList
         node *NewFirst = new node();
         NewFirst->next = NULL;
         NewFirst->data = value;
-        // NewFirst->next = head;
         if (head == NULL)
-        {
             tail = NewFirst; // In case of empty list the new list will have same head and tail
-            head = NewFirst;
-        }
         else
-        {
             NewFirst->next = head;
-            head = NewFirst;
-        }
+        head = NewFirst;
     }
 
     // node insertion at last  O(1)
@@ -39,15 +33,11 @@ struct singleLinkedList
         NewTail->data = value;
         NewTail->next = NULL;
         if (tail != NULL)
-        {
             tail->next = NewTail;
-            tail = NewTail;
-        }
+
         else
-        {
             head = NewTail; // no element on the list
-            tail = NewTail;
-        }
+        tail = NewTail;
     }
 
     // node deletion at first O(1)
@@ -97,8 +87,6 @@ struct singleLinkedList
     // insert at intermediate position
     void insert(int value, int position)
     {
-        // if(position==1)
-        // return push_front(value);
         node *newNode = new node();
         newNode->data = value;
         newNode->next = NULL;
@@ -111,24 +99,51 @@ struct singleLinkedList
         }
         newNode->next = temp->next;
         temp->next = newNode;
-        
     }
 
+    //delete first occurance of x
+    int delFirst(int val)
+    {
+        int position=1;
+        node* temp=NULL;
+        if(head==NULL)//no element on the list
+            return INT16_MIN;
+        temp=head;
+        if(temp->data==val)
+        {
+            pop_front();
+            return 1;
+        }
+        while(temp)
+        {
+            position++;
+            if(temp->next->data==val)
+            {
+                node* tofree=temp->next;
+                temp->next=temp->next->next;
+                free(tofree);
+                if(temp->next==NULL)
+                    tail=temp;//tail update
+                break;
+            }
+            temp=temp->next;
+        }
+        return position;
+    }
     // reverse linked list O(n)
     void reverse()
     {
-        //tail = NULL;
         tail = head;
-        node *temp = NULL;
-        node *temp2 = NULL;
+        node *prev = NULL;
+        node *next = NULL;
         while (head!= NULL)
         {
-            temp2 = head->next;
-            head->next = temp;
-            temp=head;
-            head = temp2;
+            next = head->next;
+            head->next = prev;
+            prev=head;
+            head = next;
         }
-        head=temp;
+        head=prev;
 
     }
     // print the data of ll also returns the total num of data O(n)
@@ -158,11 +173,15 @@ int main()
     list->push_front(14);
     list->push_back(11);
     list->insert(13, 2);
+    printf("The list:\n");
     x=list->printList();
-    printf("Total num of elemnts:%d\n", x);
+    printf("Total num of elements:%d\nThe list:\n", x);
+    int pos=list->delFirst(14);
+    x=list->printList();
+    printf("Poistion of the number that was deleted:%d\n", pos);
     list->reverse();
     printf("After reversing:\n");
     x=list->printList();
-    printf("Total num of elemnts:%d\n",x);
+    printf("Total num of elements:%d\n",x);
     return 0;
 }
