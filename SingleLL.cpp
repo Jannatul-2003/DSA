@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include <stdlib.h>
+using namespace std;
 
 struct singleLinkedList
 {
@@ -130,6 +130,7 @@ struct singleLinkedList
         }
         return position;
     }
+
     // reverse linked list O(n)
     void reverse()
     {
@@ -173,15 +174,15 @@ int main()
     list->push_front(14);
     list->push_back(11);
     list->insert(13, 2);
-    printf("The list:\n");
+    cout<<"The list:\n";
     x=list->printList();
-    printf("Total num of elements:%d\nThe list:\n", x);
-    int pos=list->delFirst(14);
+    cout<<"Total num of elements:"<< x <<"\nThe list:\n";
+    int pos=list->delFirst(13);
     x=list->printList();
-    printf("Poistion of the number that was deleted:%d\n", pos);
+    cout<<"Poistion of the number that was deleted:"<<pos<<endl;
     list->reverse();
-    printf("After reversing:\n");
+    cout<<"After reversing:"<<endl;
     x=list->printList();
-    printf("Total num of elements:%d\n",x);
+    cout<<"Total num of elements:"<<x<<endl;
     return 0;
 }
