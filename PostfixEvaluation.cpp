@@ -49,7 +49,7 @@ struct Stack
         }
     }
 
-    char peek()
+    type peek()
     {
         return head->data;
     }
