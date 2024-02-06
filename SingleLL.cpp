@@ -89,9 +89,9 @@ struct singleLinkedList
     void sort()
     {
         if (!head)
-            return;
+            return; // no element on the list
         else if (head == tail)
-            return;
+            return; // just one element on the list
         else
         {
             node *current = head; // bubble sort
@@ -130,6 +130,54 @@ struct singleLinkedList
         temp->next = newNode;
     }
 
+    // delete in the range
+    void delRange(int l, int u)
+    {
+        if (!head)
+            return;
+        else if (head == tail)
+        {
+            if (head->data >= l && head->data <= u)
+            {
+                free(head);
+                head = tail = NULL;
+                return;
+            }
+        }
+        else if (head->data >= l && head->data <= u)
+        {
+            node *temp = head;
+            head = head->next;
+            free(temp);
+            delRange(l, u);
+            return;
+        }
+
+        else
+        {
+            node *prev = head;
+            node *current = prev->next;
+            while (current)
+            {
+                if (current->data >= l && current->data <= u)
+                {
+                    prev->next = current->next;
+                    free(current);
+                    if (current == tail)
+                    {
+                        tail = prev;
+                        return;
+                    }
+                    current = prev->next;
+                }
+                else
+                {
+                    prev = prev->next;
+                    current = current->next;
+                }
+            }
+        }
+    }
     // delete first occurance of x
     int delFirst(int val)
     {
@@ -211,6 +259,10 @@ int main()
     cout << "The list:\n";
     x = list->printList();
     cout << "Total num of elements:" << x << endl;
+
+    list->delRange(8, 11);
+    cout << "The list after delRange:" << endl;
+    x = list->printList();
 
     list->sort();
     cout << "Sorted list:" << endl;
