@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+typedef char type;
+
 // double linked list
 struct DoubleLL
 {
@@ -9,7 +11,7 @@ struct DoubleLL
     struct node
     {
         node *prev;
-        char data;
+        type data;
         node *next;
     };
 
@@ -17,7 +19,7 @@ struct DoubleLL
     node *tail = NULL;
 
     // insert at beginning
-    void push(char x)
+    void push(type x)
     {
         node *newNode = new node();
         newNode->prev = NULL;
@@ -36,7 +38,7 @@ struct DoubleLL
     }
 
     // insert at end
-    void enqueue(char x)
+    void enqueue(type x)
     {
         node *newNode = new node();
         newNode->prev = NULL;
@@ -54,12 +56,12 @@ struct DoubleLL
     }
 
     // deleting first element
-    char pop()
+    type pop()
     {
         if (!head)
             return '\0';
 
-        char x = head->data;
+        type x = head->data;
         if (head == tail)
         {
             free(head);
@@ -76,11 +78,11 @@ struct DoubleLL
     }
 
     // deleting last element
-    char pop_back()
+    type pop_back()
     {
         if (!head)
             return '\0';
-        char x = tail->data;
+        type x = tail->data;
         if (head == tail)
         {
             free(tail);
@@ -96,7 +98,7 @@ struct DoubleLL
     }
 
     // insert value at intermediate position
-    void insert(char x, int position)
+    void insert(type x, int position)
     {
         node *newNode = new node();
         newNode->data = x;
@@ -114,7 +116,7 @@ struct DoubleLL
         newNode->next->prev = newNode;
     }
     // delete first occurance of value
-    int delFirst(char x)
+    int delFirst(type x)
     {
         if (!head)
             return INT16_MIN;
