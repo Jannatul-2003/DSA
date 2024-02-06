@@ -84,6 +84,35 @@ struct singleLinkedList
         tail = temp;
         return val;
     }
+
+    // sort the ll
+    void sort()
+    {
+        if (!head)
+            return;
+        else if (head == tail)
+            return;
+        else
+        {
+            node *current = head; // bubble sort
+            while (current->next) // first loop for i
+            {
+                node *nxt = current->next;
+                while (nxt) // second loop for j
+                {
+                    if (current->data > nxt->data)
+                    {
+                        int temp = current->data; // swap
+                        current->data = nxt->data;
+                        nxt->data = temp;
+                    }
+                    nxt = nxt->next;
+                }
+                current = current->next;
+            }
+        }
+    }
+
     // insert at intermediate position
     void insert(int value, int position)
     {
@@ -92,7 +121,7 @@ struct singleLinkedList
         newNode->next = NULL;
         node *temp = head;
         position--;
-        while (position!=1)
+        while (position != 1)
         {
             temp = temp->next;
             position--;
@@ -101,32 +130,32 @@ struct singleLinkedList
         temp->next = newNode;
     }
 
-    //delete first occurance of x
+    // delete first occurance of x
     int delFirst(int val)
     {
-        int position=1;
-        node* temp=NULL;
-        if(head==NULL)//no element on the list
+        int position = 1;
+        node *temp = NULL;
+        if (head == NULL) // no element on the list
             return INT16_MIN;
-        temp=head;
-        if(temp->data==val)
+        temp = head;
+        if (temp->data == val)
         {
             pop_front();
             return 1;
         }
-        while(temp)
+        while (temp)
         {
             position++;
-            if(temp->next->data==val)
+            if (temp->next->data == val)
             {
-                node* tofree=temp->next;
-                temp->next=temp->next->next;
+                node *tofree = temp->next;
+                temp->next = temp->next->next;
                 free(tofree);
-                if(temp->next==NULL)
-                    tail=temp;//tail update
+                if (temp->next == NULL)
+                    tail = temp; // tail update
                 break;
             }
-            temp=temp->next;
+            temp = temp->next;
         }
         return position;
     }
@@ -137,15 +166,14 @@ struct singleLinkedList
         tail = head;
         node *prev = NULL;
         node *next = NULL;
-        while (head!= NULL)
+        while (head != NULL)
         {
             next = head->next;
             head->next = prev;
-            prev=head;
+            prev = head;
             head = next;
         }
-        head=prev;
-
+        head = prev;
     }
     // print the data of ll also returns the total num of data O(n)
     int printList()
@@ -170,19 +198,32 @@ int main()
     list->push_front(12);     // no element push front
     int x = list->pop_back(); // one element pop back
     list->push_back(x);       // no element push back
-    list->pop_front();    // one elemnet pop front
+    list->pop_front();        // one elemnet pop front
     list->push_front(14);
+    //
+    int t = 6, i = 7;
+    while (t--)
+        list->push_front(i++);
+
+    //
     list->push_back(11);
     list->insert(13, 2);
-    cout<<"The list:\n";
-    x=list->printList();
-    cout<<"Total num of elements:"<< x <<"\nThe list:\n";
-    int pos=list->delFirst(13);
-    x=list->printList();
-    cout<<"Poistion of the number that was deleted:"<<pos<<endl;
+    cout << "The list:\n";
+    x = list->printList();
+    cout << "Total num of elements:" << x << endl;
+
+    list->sort();
+    cout << "Sorted list:" << endl;
+    x = list->printList();
+
+    int pos = list->delFirst(13);
+    cout << "The list:" << endl;
+    x = list->printList();
+    cout << "Poistion of the number that was deleted:" << pos << endl;
     list->reverse();
-    cout<<"After reversing:"<<endl;
-    x=list->printList();
-    cout<<"Total num of elements:"<<x<<endl;
+    cout << "After reversing:" << endl;
+    x = list->printList();
+    cout << "Total num of elements:" << x << endl;
+
     return 0;
 }
