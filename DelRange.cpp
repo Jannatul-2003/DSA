@@ -35,49 +35,53 @@ struct ll
         // deletes values within the range l and u, inclusive
 
         //Your code starts here #002
-        if(!head)
-        return;
-        else if(head==tail)
+        void delRange(int l, int u)
+    {
+        if (!head)
+            return;
+        else if (head == tail)
         {
-            if(head->val>=l && head->val<=u)
+            if (head->data >= l && head->data <= u)
             {
                 free(head);
-                head=tail=NULL;
+                head = tail = NULL;
                 return;
             }
         }
-        
-        else if(head->val>=l && head->val<=u)
+        else if (head->data >= l && head->data <= u)
         {
-            node* current=head->next;
-            free(head);
-            head=current;
-            delete_range(l,u);
+            node *temp = head;
+            head = head->next;
+            free(temp);
+            delRange(l, u);
             return;
         }
-        
+
         else
         {
-            node* prev=head;
-            node* current=prev->next;
-            while(current)
+            node *prev = head;
+            node *current = prev->next;
+            while (current)
             {
-                if(current->val>=l && current->val<=u)
+                if (current->data >= l && current->data <= u)
                 {
-                prev->next=current->next;
-                free(current);
-                current=prev->next;
-                if(!current)
-                    tail=prev;
+                    prev->next = current->next;
+                    free(current);
+                    if (current == tail)
+                    {
+                        tail = prev;
+                        return;
+                    }
+                    current = prev->next;
                 }
                 else
                 {
-                prev=current;
-                current=current->next;
+                    prev = prev->next;
+                    current = current->next;
                 }
             }
-
         }
+    }
         //Your code ends here #002
 
     }
