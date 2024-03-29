@@ -1,16 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
-//dll and do not handle wrong parent node
+//sll and handle wrong parent node
 struct node
 {
     int val;
     node *left_child;
     node *right_child;
-    node* parent;
     node(int data)
     {
-        val=data;
-        left_child=right_child=parent=NULL;
+        val = data;
+        left_child = right_child = NULL;
     }
 };
 struct BT
@@ -21,30 +20,33 @@ struct BT
         node *new_node = new node(val);
         root = new_node;
     }
-    void add_child(int parent_val, int child_val, node *p)
+    bool add_child(int parent_val, int child_val, node *p, bool *found)
     {
+        if (*found == true)
+            return *found;
         if (p == NULL)
-            return;
+            return false;
         if (p->val == parent_val)
         {
             if (p->left_child == NULL)
             {
                 node *temp = new node(child_val);
                 p->left_child = temp;
-                p->left_child->parent=p;
-                return;
+                *found = true;
+                return *found;
             }
             else if (p->right_child == NULL)
             {
                 node *temp = new node(child_val);
                 p->right_child = temp;
-                p->right_child->parent=p;
-                return;
+                *found = true;
+                return *found;
             }
         }
-            add_child(parent_val, child_val, p->left_child);
-            add_child(parent_val, child_val, p->right_child);
-            return;
+
+            add_child(parent_val, child_val, p->left_child, found);
+            add_child(parent_val, child_val, p->right_child, found);
+            return *found;
     }
     void In_Order_Traversal(node *p)
     {
@@ -76,20 +78,20 @@ int main()
     int n;
     cin >> n;
     BT *new_BT = new BT();
-    for (int i = 1; i < n; i++)
+    for (int i = 0; i < n -1; i++)
     {
         int parent_val, child_val;
         cin >> parent_val >> child_val;
-        if (i == 1)
+        if (i == 0)
         {
             new_BT->add_root(parent_val);
-            new_BT->add_child(parent_val, child_val, new_BT->root);
         }
-        else
+        bool flag = false;
+        if (!new_BT->add_child(parent_val, child_val, new_BT->root, &flag))
         {
-            new_BT->add_child(parent_val, child_val, new_BT->root);
+            cout << "Parent node not found" << endl;
+            i--;
         }
-        
     }
     cout<<"Inorder Traversal : ";
     new_BT->In_Order_Traversal(new_BT->root);
