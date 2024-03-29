@@ -1,28 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct TreeNode {
+struct TreeNode
+{
 	int val;
 	TreeNode *left, *right;
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-TreeNode* buildTree(vector<int>& nums) {
-	if (nums.empty()) {
+TreeNode *buildTree(vector<int> &nums)
+{
+	if (nums.empty())
+	{
 		return NULL;
 	}
-	TreeNode* root = new TreeNode(nums[0]);
-	queue<TreeNode*> q;
+	TreeNode *root = new TreeNode(nums[0]);
+	queue<TreeNode *> q;
 	q.push(root);
 	int i = 1;
-	while (i < nums.size()) {
-		TreeNode* curr = q.front();
+	while (i < nums.size())
+	{
+		TreeNode *curr = q.front();
 		q.pop();
-		if (i < nums.size()) {
+		if (i < nums.size())
+		{
 			curr->left = new TreeNode(nums[i++]);
 			q.push(curr->left);
 		}
-		if (i < nums.size()) {
+		if (i < nums.size())
+		{
 			curr->right = new TreeNode(nums[i++]);
 			q.push(curr->right);
 		}
@@ -30,8 +36,10 @@ TreeNode* buildTree(vector<int>& nums) {
 	return root;
 }
 
-void printTree(TreeNode* root) {
-	if (!root) {
+void printTree(TreeNode *root)//Inorder Traversal
+{
+	if (!root)
+	{
 		return;
 	}
 	printTree(root->left);
@@ -40,9 +48,11 @@ void printTree(TreeNode* root) {
 	printTree(root->right);
 }
 
-int main() {
-	vector<int> nums = { 1, 2, 3,0,4 ,5,6};
-	TreeNode* root = buildTree(nums);
+int main()
+{
+	vector<int> nums = {1, 2, 3, 0, 4, 5, 6};
+	// nums.insert(nums.begin(), -1);
+	TreeNode *root = buildTree(nums);
 	printTree(root);
 	return 0;
 }
