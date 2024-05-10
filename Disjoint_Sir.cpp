@@ -3,8 +3,9 @@ using namespace std;
 
 //#define INT_MAX 2147483647
 
-int parent[1000];
-int Rank[1000]={0};
+int parent[1000000];
+int Rank[10000000]={0};
+int nodeNo[1000000]={1};
 
 int find_set(int i)//returns the root of the set in which i is present
 {
@@ -32,13 +33,30 @@ void unoin_set(int i, int j)
         return;
     if(Rank[root_of_i]<Rank[root_of_j])
     {
+        nodeNo[root_of_j]+=nodeNo[root_of_i];//size[root_of_tree_with_higher_depth]+=size[root_of_tree_with_lower_depth
         parent[root_of_i]=root_of_j;//parent[root_of_tree_with_lower_depth]=root_of_tree_with_higher_depth; 
     }
-    else
+    else if(Rank[root_of_i]>Rank[root_of_j])
     {
+        nodeNo[root_of_i]+=nodeNo[root_of_j];//size[root_of_tree_with_higher_depth]+=size[root_of_tree_with_lower_depth
         parent[root_of_j]=root_of_i;//parent[root_of_tree_with_lower_depth]=root_of_tree_with_higher_depth; 
-        if(Rank[root_of_i]==Rank[root_of_j])
+    }
+    else if(Rank[root_of_i]==Rank[root_of_j])
+    {
+        int size1=nodeNo[root_of_i];
+        int size2=nodeNo[root_of_j];
+        if(size1>size2)
+        {
+            nodeNo[root_of_i]+=nodeNo[root_of_j];
+            parent[root_of_j]=root_of_i;
             Rank[root_of_i]++;
+        }
+        else
+        {
+            nodeNo[root_of_j]+=nodeNo[root_of_i];
+            parent[root_of_i]=root_of_j;
+            Rank[root_of_j]++;
+        }
     }
     
 }
