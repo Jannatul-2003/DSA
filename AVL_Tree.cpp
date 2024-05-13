@@ -1,8 +1,8 @@
-// C++ program to delete a node from AVL Tree 
+
 #include<bits/stdc++.h>
 using namespace std;
 
-// An AVL tree node 
+
 class Node 
 { 
 	public:
@@ -12,12 +12,6 @@ class Node
 	int height; 
 }; 
 
-// A utility function to get maximum
-// of two integers 
-int max(int a, int b); 
-
-// A utility function to get height 
-// of the tree 
 int height(Node *N) 
 { 
 	if (N == NULL) 
@@ -25,16 +19,11 @@ int height(Node *N)
 	return N->height; 
 } 
 
-// A utility function to get maximum
-// of two integers 
 int max(int a, int b) 
 { 
 	return (a > b)? a : b; 
 } 
 
-/* Helper function that allocates a 
-new node with the given key and 
-NULL left and right pointers. */
 Node* newNode(int key) 
 { 
 	Node* node = new Node();
@@ -46,9 +35,6 @@ Node* newNode(int key)
 	return(node); 
 } 
 
-// A utility function to right
-// rotate subtree rooted with y 
-// See the diagram given above. 
 Node *rightRotate(Node *y) 
 { 
 	Node *x = y->left; 
@@ -68,9 +54,7 @@ Node *rightRotate(Node *y)
 	return x; 
 } 
 
-// A utility function to left 
-// rotate subtree rooted with x 
-// See the diagram given above. 
+
 Node *leftRotate(Node *x) 
 { 
 	Node *y = x->right; 
@@ -286,6 +270,19 @@ void preOrder(Node *root)
 		preOrder(root->right); 
 	} 
 } 
+ 
+bool find(int val,Node* p){
+        if(!p)return false;
+        if(p->key==val){
+            return true;
+        }
+        else if(val>p->key){
+            return find(val,p->right);
+        }
+        else{
+            return find(val,p->left);
+        }
+    }
 
 // Driver Code
 int main() 
