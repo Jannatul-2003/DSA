@@ -270,7 +270,7 @@ void preOrder(Node *root)
 		preOrder(root->right); 
 	} 
 } 
- 
+
 bool find(int val,Node* p){
         if(!p)return false;
         if(p->key==val){
